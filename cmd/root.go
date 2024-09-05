@@ -30,7 +30,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-var cfgFile string
+var (
+	cfgFile string
+	VERSION = "unknown"
+)
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -39,6 +42,10 @@ var rootCmd = &cobra.Command{
 	Long: `docker-exporter is a command-line interface (CLI) tool designed to 
 export and display the configuration and parameters of Docker containers.
 `,
+	Run: func(cmd *cobra.Command, args []string) {
+		cmd.Help()
+	},
+	Version: VERSION,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -55,7 +62,6 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.docker-exporter.yaml)")
 
 	rootCmd.PersistentFlags().StringP("docker-host", "H", "unix:///var/run/docker.sock", "Docker daemon api address  (e.g., tcp://localhost:2375 or unix:///var/run/docker.sock)")
-	rootCmd.PersistentFlags().StringP("client-version", "V", "1.39", "Docker client version")
 }
 
 // initConfig reads in config file and ENV variables if set.
