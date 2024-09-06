@@ -96,6 +96,7 @@ func init() {
 	rootCmd.AddCommand(exportCmd)
 
 	// Example flags for the export command (optional, customize as needed)
+	exportCmd.Flags().BoolP("all", "a", false, "Include stopped containers in the output")
 	exportCmd.Flags().BoolP("pretty", "p", false, "Pretty-print the output")
 	exportCmd.Flags().StringP("output-dir", "o", "", "Set output directory for the generated files, if not set, output to stdout")
 	exportCmd.Flags().StringP("format", "f", "command", "Set output format (eg. command (shell), compose (yaml))")
