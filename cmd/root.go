@@ -62,6 +62,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.docker-exporter.yaml)")
 
 	rootCmd.PersistentFlags().StringP("docker-host", "H", "unix:///var/run/docker.sock", "Docker daemon api address  (e.g., tcp://localhost:2375 or unix:///var/run/docker.sock)")
+	rootCmd.PersistentFlags().StringP("client-version", "V", "1.39", "Docker client version")
 }
 
 // initConfig reads in config file and ENV variables if set.
