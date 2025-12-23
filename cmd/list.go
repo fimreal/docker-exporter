@@ -30,7 +30,7 @@ import (
 
 // listCmd represents the list command
 var listCmd = &cobra.Command{
-	Aliases: []string{"l", "ps"}, // 可选：为命令设置别名
+	Aliases: []string{"l", "ls", "ps"},
 	Use:     "list [CONTAINER...]",
 	Short:   "List Docker containers",
 	Long: `The list command displays all currently running Docker containers along with their configurations. 
@@ -38,9 +38,6 @@ Given no arguments, the list command will display all running containers.
 Given one or more container names or IDs, the list command will display only those containers.
 Use the -a flag to include stopped containers in the output.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		showAll, _ := cmd.Flags().GetBool("all")
-		pretty, _ := cmd.Flags().GetBool("pretty")
-
 		var containers []types.Container
 		var err error
 
@@ -56,12 +53,13 @@ Use the -a flag to include stopped containers in the output.`,
 			return
 		}
 		// format and print the list
-		dockercli.ListPrint(containers, pretty)
+		dockercli.ListPrint(containers)
 	},
 }
 
+var showAll bool
+
 func init() {
+	listCmd.Flags().BoolVarP(&showAll, "all", "a", false, "Include stopped containers in the output")
 	rootCmd.AddCommand(listCmd)
-	listCmd.Flags().BoolP("all", "a", false, "Include stopped containers in the output")
-	listCmd.Flags().BoolP("pretty", "p", false, "Pretty-print the output")
 }

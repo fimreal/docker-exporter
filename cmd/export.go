@@ -33,8 +33,9 @@ import (
 
 // exportCmd represents the export command
 var exportCmd = &cobra.Command{
-	Use:   "export",
-	Short: "Export the configuration of a specified Docker container",
+	Aliases: []string{"e", "dump"},
+	Use:     "export",
+	Short:   "Export the configuration of a specified Docker container",
 	Long: `The export command retrieves and displays the full configuration 
 of a specified Docker container. It provides an easy way to see the parameters 
 and settings used when the container was created, which can be useful for 

@@ -24,14 +24,10 @@ func (d *DockerClient) List(showAll bool) ([]types.Container, error) {
 }
 
 // listPrint 打印每个容器的信息
-func ListPrint(containerSummary []types.Container, pretty bool) {
+func ListPrint(containerSummary []types.Container) {
 
 	// 打印表头
-	if pretty {
-		fmt.Printf("%-12s %-15s %-20s %-10s %-25s\n", "CONTAINER ID", "NAMES", "CREATED", "STATUS", "IMAGE")
-	} else {
-		fmt.Println("CONTAINER ID        NAMES         CREATED         STATUS     IMAGE")
-	}
+	fmt.Printf("%-13s %-20s %-8s %-25s %-30s\n", "CONTAINER ID", "CREATED", "STATUS", "NAMES", "IMAGE")
 
 	for _, containerSummary := range containerSummary {
 		id := strings.TrimPrefix(containerSummary.ID, "sha256:")
@@ -40,11 +36,7 @@ func ListPrint(containerSummary []types.Container, pretty bool) {
 		status := containerSummary.State                                                    // 状态
 		name := strings.TrimPrefix(containerSummary.Names[0], "/")                          // 容器名称（可能有多个）
 
-		if pretty {
-			fmt.Printf("%-12s %-15s %-20s %-10s %-25s\n", id[:12], name, createdTime, status, image)
-		} else {
-			fmt.Printf("%-20s %-15s %-20s %-10s %-25s\n", id, name, createdTime, status, image)
-		}
+		fmt.Printf("%-13s %-20s %-8s %-25s %-30s\n", id[:12], createdTime, status, name, image)
 	}
 }
 
